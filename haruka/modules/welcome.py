@@ -10,7 +10,7 @@ from telegram.utils.helpers import mention_markdown, mention_html, escape_markdo
 
 import haruka.modules.sql.welcome_sql as sql
 from haruka import dispatcher, OWNER_ID, LOGGER, MESSAGE_DUMP
-from haruka.modules.helper_funcs.chat_status import user_admin, is_user_ban_protected
+from haruka.modules.helper_funcs.chat_status import user_admin, can_del, is_user_ban_protected
 from haruka.modules.helper_funcs.misc import build_keyboard, revert_buttons
 from haruka.modules.helper_funcs.msg_types import get_welcome_type
 from haruka.modules.helper_funcs.string_handling import markdown_parser, \
