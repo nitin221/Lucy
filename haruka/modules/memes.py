@@ -4,27 +4,24 @@ from io import BytesIO
 import base64
 from spongemock import spongemock
 from zalgo_text import zalgo
-from deeppyer import deepfry
+# from deeppyer import deepfry
 import os
 from pathlib import Path
 import glob
-
-import nltk # shitty lib, but it does work
-nltk.download('punkt')
-nltk.download('averaged_perceptron_tagger')
 
 from typing import Optional, List
 from telegram import Message, Update, Bot, User
 from telegram import MessageEntity
 from telegram.ext import Filters, MessageHandler, run_async
 
-from haruka import dispatcher, DEEPFRY_TOKEN
+from haruka import dispatcher
 from haruka.modules.disable import DisableAbleCommandHandler, DisableAbleRegexHandler
 
 WIDE_MAP = dict((i, i + 0xFEE0) for i in range(0x21, 0x7F))
 WIDE_MAP[0x20] = 0x3000
 
 # D A N K modules by @deletescape vvv
+
 
 @run_async
 def owo(bot: Bot, update: Update):
@@ -83,6 +80,7 @@ def vapor(bot: Bot, update: Update, args: List[str]):
 
 # D A N K modules by @deletescape ^^^
 # Less D A N K modules by @skittles9823 # holi fugg I did some maymays vvv
+
 
 @run_async
 def mafiatext(bot: Bot, update: Update):
@@ -152,6 +150,7 @@ def kimtext(bot: Bot, update: Update):
         message.reply_to_message.reply_photo(photo=mockedphoto, reply=message.reply_to_message)
     os.remove('kimed{}.jpg'.format(randint))
 
+
 @run_async
 def hitlertext(bot: Bot, update: Update):
     message = update.effective_message
@@ -173,7 +172,8 @@ def hitlertext(bot: Bot, update: Update):
     with open('hitlered{}.jpg'.format(randint), 'rb') as mockedphoto:
         message.reply_to_message.reply_photo(photo=mockedphoto, reply=message.reply_to_message)
     os.remove('hitlered{}.jpg'.format(randint))
-	
+
+
 @run_async
 def spongemocktext(bot: Bot, update: Update):
     message = update.effective_message
@@ -196,6 +196,7 @@ def spongemocktext(bot: Bot, update: Update):
         message.reply_to_message.reply_photo(photo=mockedphoto, reply=message.reply_to_message)
     os.remove('mocked{}.jpg'.format(randint))
 
+
 @run_async
 def zalgotext(bot: Bot, update: Update):
     message = update.effective_message
@@ -210,82 +211,6 @@ def zalgotext(bot: Bot, update: Update):
 # Less D A N K modules by @skittles9823 # holi fugg I did some maymays ^^^
 # shitty maymay modules made by @divadsn vvv
 
-@run_async
-def forbesify(bot: Bot, update: Update):
-    message = update.effective_message
-    if message.reply_to_message:
-        data = message.reply_to_message.text
-    else:
-        data = ''
-
-    data = data.lower()
-    accidentals = ['VB', 'VBD', 'VBG', 'VBN']
-    reply_text = data.split()
-    offset = 0
-
-    # use NLTK to find out where verbs are
-    tagged = dict(nltk.pos_tag(reply_text))
-
-    # let's go through every word and check if it's a verb
-    # if yes, insert ACCIDENTALLY and increase offset
-    for k in range(len(reply_text)):
-        i = reply_text[k + offset]
-        if tagged.get(i) in accidentals:
-            reply_text.insert(k + offset, 'accidentally')
-            offset += 1
-
-    reply_text = string.capwords(' '.join(reply_text))
-    message.reply_to_message.reply_text(reply_text)
-
-
-@run_async
-def deepfryer(bot: Bot, update: Update):
-    message = update.effective_message
-    if message.reply_to_message:
-        data = message.reply_to_message.photo
-        data2 = message.reply_to_message.sticker
-    else:
-        data = []
-        data2 = []
-
-    # check if message does contain media and cancel when not
-    if not data and not data2:
-        message.reply_text("What am I supposed to do with this?!")
-        return
-
-    # download last photo (highres) as byte array
-    if data:
-        photodata = data[len(data) - 1].get_file().download_as_bytearray()
-        image = Image.open(io.BytesIO(photodata))
-    elif data2:
-        sticker = bot.get_file(data2.file_id)
-        sticker.download('sticker.png')
-        image = Image.open("sticker.png")
-
-    # the following needs to be executed async (because dumb lib)
-    loop = asyncio.new_event_loop()
-    loop.run_until_complete(process_deepfry(image, message.reply_to_message, bot))
-    loop.close()
-
-async def process_deepfry(image: Image, reply: Message, bot: Bot):
-    # DEEPFRY IT
-    image = await deepfry(
-        img=image,
-        token=DEEPFRY_TOKEN,
-        url_base='westeurope'
-    )
-
-    bio = BytesIO()
-    bio.name = 'image.jpeg'
-    image.save(bio, 'JPEG')
-
-    # send it back
-    bio.seek(0)
-    reply.reply_photo(bio)
-    if Path("sticker.png").is_file():
-        os.remove("sticker.png")
-
-# shitty maymay modules made by @divadsn ^^^
 
 @run_async
 def shout(bot: Bot, update: Update, args):
@@ -304,6 +229,7 @@ def shout(bot: Bot, update: Update, args):
     result = "".join(result)
     msg = "```\n" + result + "```"
     return update.effective_message.reply_text(msg, parse_mode="MARKDOWN")
+
 
 # no help string
 __help__ = """
@@ -330,8 +256,7 @@ MAFIA_HANDLER = DisableAbleCommandHandler("mafia", mafiatext, admin_ok=True)
 PIDOR_HANDLER = DisableAbleCommandHandler("pidor", pidortext, admin_ok=True)
 HITLER_HANDLER = DisableAbleCommandHandler("hitler", hitlertext, admin_ok=True)
 ZALGO_HANDLER = DisableAbleCommandHandler("zalgofy", zalgotext)
-FORBES_HANDLER = DisableAbleCommandHandler("forbes", forbesify, admin_ok=True)
-DEEPFRY_HANDLER = DisableAbleCommandHandler("deepfry", deepfryer, admin_ok=True)
+# DEEPFRY_HANDLER = DisableAbleCommandHandler("deepfry", deepfryer, admin_ok=True)
 SHOUT_HANDLER = DisableAbleCommandHandler("shout", shout, pass_args=True)
 
 
@@ -343,8 +268,7 @@ dispatcher.add_handler(STRETCH_HANDLER)
 dispatcher.add_handler(VAPOR_HANDLER)
 dispatcher.add_handler(MOCK_HANDLER)
 dispatcher.add_handler(ZALGO_HANDLER)
-dispatcher.add_handler(FORBES_HANDLER)
-dispatcher.add_handler(DEEPFRY_HANDLER)
+# dispatcher.add_handler(DEEPFRY_HANDLER)
 dispatcher.add_handler(KIM_HANDLER)
 dispatcher.add_handler(HITLER_HANDLER)
 
