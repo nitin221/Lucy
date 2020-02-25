@@ -20,5 +20,5 @@ PyLyrics
 #AEX
 hurry.filesize
 #translator
-py_translator
+googletrans
 beautifulsoup4==4.6.3
