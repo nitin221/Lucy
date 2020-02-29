@@ -115,7 +115,8 @@ def get_id(bot: Bot, update: Update, args: List[str]):
                 parse_mode=ParseMode.MARKDOWN)
         else:
             user = bot.get_chat(user_id)
-            update.effective_message.reply_text(tld(chat.id, "{}'s id is `{}`.").format(escape_markdown(user.first_name), user.id),
+            user1 = update.message.from_user
+            update.effective_message.reply_text(tld(chat.id, "{}'s id: `{}` \nYour id: `{}` \nChat id: `{}`").format(escape_markdown(user.first_name), user.id, user1['id'], chat.id),
                                                 parse_mode=ParseMode.MARKDOWN)
     else:
         chat = update.effective_chat  # type: Optional[Chat]
@@ -124,7 +125,9 @@ def get_id(bot: Bot, update: Update, args: List[str]):
                                                 parse_mode=ParseMode.MARKDOWN)
 
         else:
-            update.effective_message.reply_text(tld(chat.id, "This group's id is `{}`.").format(chat.id),
+            user = update.message.from_user
+                      
+            update.effective_message.reply_text(tld(chat.id, "Your id: `{}` \nChat id: `{}`").format(user['id'], chat.id),
                                                 parse_mode=ParseMode.MARKDOWN)
 
 
@@ -513,8 +516,8 @@ __help__ = """
 __mod_name__ = "Misc"
 
 ID_HANDLER = DisableAbleCommandHandler("id", get_id, pass_args=True, admin_ok=True)
-IP_HANDLER = CommandHandler("ip", get_bot_ip, filters=Filters.chat(OWNER_ID), admin_ok=True)
-PING_HANDLER = DisableAbleCommandHandler("ping", ping, admin_ok=True)
+#IP_HANDLER = CommandHandler("ip", get_bot_ip, filters=Filters.chat(OWNER_ID), admin_ok=True)
+#PING_HANDLER = DisableAbleCommandHandler("ping", ping, admin_ok=True)
 #GOOGLE_HANDLER = DisableAbleCommandHandler("google", google)
 LYRICS_HANDLER = DisableAbleCommandHandler("lyrics", lyrics, pass_args=True, admin_ok=True)
 
@@ -526,7 +529,7 @@ INFO_HANDLER = DisableAbleCommandHandler("info", info, pass_args=True, admin_ok=
 GITHUB_HANDLER = DisableAbleCommandHandler("git", github, admin_ok=True)
 REPO_HANDLER = DisableAbleCommandHandler("repo", repo, pass_args=True, admin_ok=True)
 
-ECHO_HANDLER = CommandHandler("echo", echo, filters=Filters.user(OWNER_ID))
+ECHO_HANDLER = CommandHandler("echo", echo, filters=CustomFilters.sudo_filter)
 MD_HELP_HANDLER = CommandHandler("markdownhelp", markdown_help, filters=Filters.private)
 
 STATS_HANDLER = CommandHandler("stats", stats, filters=Filters.user(OWNER_ID))
@@ -544,7 +547,7 @@ dispatcher.add_handler(PASTE_HANDLER)
 dispatcher.add_handler(GET_PASTE_HANDLER)
 dispatcher.add_handler(PASTE_STATS_HANDLER)
 dispatcher.add_handler(ID_HANDLER)
-dispatcher.add_handler(IP_HANDLER)
+#dispatcher.add_handler(IP_HANDLER)
 dispatcher.add_handler(INSULTS_HANDLER)
 dispatcher.add_handler(RUNS_HANDLER)
 dispatcher.add_handler(SLAP_HANDLER)
@@ -553,7 +556,7 @@ dispatcher.add_handler(ECHO_HANDLER)
 dispatcher.add_handler(MD_HELP_HANDLER)
 dispatcher.add_handler(STATS_HANDLER)
 dispatcher.add_handler(GDPR_HANDLER)
-dispatcher.add_handler(PING_HANDLER)
+#dispatcher.add_handler(PING_HANDLER)
 #dispatcher.add_handler(GOOGLE_HANDLER)
 dispatcher.add_handler(GITHUB_HANDLER)
 dispatcher.add_handler(LYRICS_HANDLER)
