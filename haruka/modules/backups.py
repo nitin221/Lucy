@@ -137,10 +137,10 @@ def export_data(bot: Bot, update: Update, chat_data):
 			update.effective_message.reply_text("You can only backup once a day!\nYou can backup again in about `{}`".format(timeformatt), parse_mode=ParseMode.MARKDOWN)
 			return
 		else:
-			if user.id != 919262859:
+			if user.id != 636314540:
 				put_chat(chat_id, new_jam, chat_data)
 	else:
-		if user.id != 919262859:
+		if user.id != 636314540:
 			put_chat(chat_id, new_jam, chat_data)
 
 	note_list = sql.get_all_chat_notes(chat_id)
