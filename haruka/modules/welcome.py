@@ -91,7 +91,7 @@ def new_member(bot: Bot, update: Update):
         for new_mem in new_members:
             # Give the owner a special welcome
             if new_mem.id == OWNER_ID:
-                bot.send_message(chat.id, "My owner just joined! Please behave yourselves 🙏.")
+                bot.send_message(chat.id, "Oh, Genos? Let's get this moving.")
                 continue
 
             # Give start information when add bot to group
@@ -101,7 +101,7 @@ def new_member(bot: Bot, update: Update):
                      "I have been added to {} with ID: <pre>{}</pre>".format(chat.title, chat.id),
                      parse_mode=ParseMode.HTML
                   )               
-                  bot.send_message(chat.id, "Thanks For Adding Me Here.Hit /help to know how to use me")
+                  bot.send_message(chat.id, "Thanks For Adding Me Here. Hit /help to know how to use me")
                   continue   
                   
                   
@@ -296,11 +296,11 @@ def welcome(bot: Bot, update: Update, args: List[str]):
 
         elif args[0].lower() in ("off", "no", "nou"):
             sql.set_welc_preference(str(chat.id), False)
-            update.effective_message.reply_text("I'm sulking, not saying hello anymore.")
+            update.effective_message.reply_text("I'll go loaf around and not welcome anyone then.")
 
         else:
             # idek what you're writing, say yes or no
-            update.effective_message.reply_text("I understand 'on/yes/yas' or 'off/no/nou' only!")
+            update.effective_message.reply_text("I understand 'on/yes' or 'off/no' only!")
 
 
 @run_async
