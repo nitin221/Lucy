@@ -245,12 +245,12 @@ def left_member(bot: Bot, update: Update):
                 keyb = build_keyboard(buttons)
 
             else:
-                res = sql.DEFAULT_GOODBYE
+                res = sql.DEFAULT_GOODBYE.format(first=first_name)
                 keyb = []
 
             keyboard = InlineKeyboardMarkup(keyb)
 
-            send(update, res, keyboard, sql.DEFAULT_GOODBYE)
+            send(update, res, keyboard, sql.DEFAULT_GOODBYE.format(first=first_name))
 
             #Clean service goodbye
             if sql.clean_service(chat.id) == True:
