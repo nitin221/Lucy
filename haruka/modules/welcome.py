@@ -250,7 +250,8 @@ def left_member(bot: Bot, update: Update):
 
             keyboard = InlineKeyboardMarkup(keyb)
 
-            send(update, res, keyboard, sql.DEFAULT_GOODBYE.format(first=first_name))
+            sent = send(update, res, keyboard,
+                            sql.DEFAULT_GOODBYE.format(first=first_name))  # type: Optional[Message]
 
             #Clean service goodbye
             if sql.clean_service(chat.id) == True:
