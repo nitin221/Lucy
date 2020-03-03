@@ -140,7 +140,7 @@ Click Help button to find out more about how to use me to my full potential.\n\n
 
     text += "Join [Support Group](https://Lucysupportchat) ( @LucySupportChat ) if you need any support or help\n\n\
 Follow [Lucy Updates](https://Lucysupportchat) ( @LucySupportChat ) if you want to keep up with the news, updates and bot downtime!\n\n\
-Made with love by @ItsAviral and @Okay_retard\n\nWant to add me to your group? [Click here!](t.me/Lucy_Robot?startgroup=true)"
+Made with love by @ItsAviral and @Okay\_retard\n\nWant to add me to your group? [Click here!](t.me/Lucy\_Robot?startgroup=true)"
 
     keyboard = [[InlineKeyboardButton(text="📢 Support Group", url="https://t.me/LucySupportChat")]]
     keyboard += [[InlineKeyboardButton(text="🛠 Control panel", callback_data="cntrl_panel_M")]]
