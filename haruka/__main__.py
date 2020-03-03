@@ -122,7 +122,7 @@ def start(bot: Bot, update: Update, args: List[str]):
             send_start(bot, update)
     else:
         try:
-            update.effective_message.reply_text("Hoi sup! I'm alive :3")
+            update.effective_message.reply_text("Yes?")
         except:
             print("Nut")
 
@@ -140,7 +140,7 @@ Click Help button to find out more about how to use me to my full potential.\n\n
 
     text += "Join [Support Group](https://Lucysupportchat) ( @LucySupportChat ) if you need any support or help\n\n\
 Follow [Lucy Updates](https://Lucysupportchat) ( @LucySupportChat ) if you want to keep up with the news, updates and bot downtime!\n\n\
-Made with love by @ItsAviral and @Okay\_retard\n\nWant to add me to your group? [Click here!](t.me/Lucy\_Robot?startgroup=true)"
+Made with love by @ItsAviral, @Okay\_retart and @Aniket02\n\nWant to add me to your group? [Click here!](t.me/Lucy\_Robot?startgroup=true)"
 
     keyboard = [[InlineKeyboardButton(text="📢 Support Group", url="https://t.me/LucySupportChat")]]
     keyboard += [[InlineKeyboardButton(text="🛠 Control panel", callback_data="cntrl_panel_M")]]
