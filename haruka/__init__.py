@@ -60,6 +60,7 @@ if ENV:
     STRICT_GBAN = False
     TEMPORARY_DATA = os.environ.get('TEMPORARY_DATA', None)
     ALLOW_EXCL = os.environ.get('ALLOW_EXCL', False)
+    GBAN_LOGS = os.environ.get('GBAN_LOGS', "")
 
 else:
     from haruka.config import Development as Config
@@ -102,12 +103,10 @@ else:
     BAN_STICKER = Config.BAN_STICKER
     TEMPORARY_DATA = Config.TEMPORARY_DATA
     ALLOW_EXCL = Config.ALLOW_EXCL
-   
+    GBAN_LOGS = Config.GBAN_LOGS
 
 SUDO_USERS.add(OWNER_ID)
-SUDO_USERS.add(654455829)
-SUDO_USERS.add(806664986)
-SUDO_USERS.add(896399844)
+
 
 
 
