@@ -2,7 +2,7 @@ import threading
 
 from sqlalchemy import Column, UnicodeText, Boolean, Integer
 
-from tg_bot.modules.sql import BASE, SESSION
+from haruka.modules.sql import BASE, SESSION
 
 
 class CleanerBlueText(BASE):
