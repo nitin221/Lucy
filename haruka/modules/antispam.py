@@ -70,9 +70,7 @@ def gban(bot: Bot, update: Update, args: List[str]):
         message.reply_text("OOOH someone's trying to gban a Demon Disaster! *grabs popcorn*")
         return
 
-    if int(user_id) in WHITELIST_USERS:
-        message.reply_text("Wolves cannot be gbanned!")
-        return
+    
 
     if user_id == bot.id:
         message.reply_text("You uhh...want me to punch myself?")
