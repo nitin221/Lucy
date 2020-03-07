@@ -334,7 +334,7 @@ def gmute(bot: Bot, update: Update, args: List[str]):
 
         return
 
-    message.reply_text("Globally Muting!")
+    message.reply_text("*Globally Muting!*")
 
     muter = update.effective_user  # type: Optional[User]
     send_to_list(bot, SUDO_USERS + SUPPORT_USERS,
