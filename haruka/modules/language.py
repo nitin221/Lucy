@@ -32,6 +32,56 @@ def locale(bot, update, args):
         else:
             update.message.reply_text("Current locale for this chat is: *English*", parse_mode = ParseMode.MARKDOWN)
 
+
+@user_admin
+def tl(message, text):
+	if type(message) == int or type(message) == str and message[1:].isdigit():
+		getlang = sql.get_lang(message)
+		if getlang == 'None' or not getlang:
+			getlang = 'id'
+	else:
+		getlang = sql.get_lang(message.chat.id)
+		if getlang == 'None' or not getlang:
+			if message.from_user.language_code:
+				if message.from_user.language_code in LOADED_LANGS_ID:
+					sql.set_lang(message.chat.id, message.from_user.language_code)
+					getlang = message.from_user.language_code
+				else:
+					sql.set_lang(message.chat.id, 'en')
+					getlang = 'en'
+			else:
+				if message.chat.type == "private":
+					sql.set_lang(message.chat.id, 'en')
+					getlang = 'en'
+				else:
+					sql.set_lang(message.chat.id, 'id')
+					getlang = 'id'
+
+	getlangid = {}
+	for x in LOADED_LANGS_ID:
+		getlangid[x] = x
+
+	if str(getlang) == 'id':
+		get = getattr(FUNC_LANG['id'], 'id')
+		if text in tuple(get):
+			return get.get(text)
+		if text in ("RUN_STRINGS", "SLAP_TEMPLATES", "ITEMS", "THROW", "HIT"):
+			runstr = getattr(FUNC_LANG['id'], text)
+			return runstr
+		return text
+	elif str(getlang) in LOADED_LANGS_ID:
+		func = getattr(FUNC_LANG[getlang], getlang)
+		if text in ("RUN_STRINGS", "SLAP_TEMPLATES", "ITEMS", "THROW", "HIT"):
+			runstr = getattr(FUNC_LANG[getlang], text)
+			return runstr
+		langtxt = func.get(text)
+		if not langtxt:
+			LOGGER.warning("Can't get translated string for lang '{}' ('{}')".format(str(getlang), text))
+			langtxt = text
+		return langtxt
+	else:
+		return text
+
 @user_admin
 def locale_button(bot, update):
     chat = update.effective_chat
