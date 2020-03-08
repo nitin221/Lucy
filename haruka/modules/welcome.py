@@ -561,7 +561,6 @@ CLEAN_WELCOME = CommandHandler("cleanwelcome", clean_welcome, pass_args=True, fi
 SECURITY_HANDLER = CommandHandler("welcomesecurity", security, pass_args=True, filters=Filters.group)
 CLEAN_SERVICE_HANDLER = CommandHandler("cleanservice", cleanservice, pass_args=True, filters=Filters.group)
 
-help_callback_handler = CallbackQueryHandler(check_bot_button, pattern=r"check_bot_")
 
 dispatcher.add_handler(NEW_MEM_HANDLER)
 dispatcher.add_handler(LEFT_MEM_HANDLER)
@@ -575,4 +574,4 @@ dispatcher.add_handler(CLEAN_WELCOME)
 dispatcher.add_handler(SECURITY_HANDLER)
 dispatcher.add_handler(CLEAN_SERVICE_HANDLER)
 
-dispatcher.add_handler(help_callback_handler)
+
