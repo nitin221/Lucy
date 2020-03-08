@@ -6,7 +6,7 @@ class Config(object):
     LOGGER = True
 
     # REQUIRED
-    API_KEY = "1002584093:AAGZEKxaLiO1u_x69rwq2NbcR8qAjZsSky4" #that you got from botfather
+    API_KEY = "" #that you got from botfather
     OWNER_ID = "636314540" #If you dont know, run the bot and do /id in your private chat with it
     OWNER_USERNAME = "itsAviral" #@urusername
 
