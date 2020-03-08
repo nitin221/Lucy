@@ -85,6 +85,13 @@ def send(update, message, keyboard, backup_message):
 @run_async
 def new_member(bot: Bot, update: Update):
     chat = update.effective_chat  # type: Optional[Chat]
+    user = update.effective_user
+    msg = update.effective_message
+    chat_name = chat.title or chat.first or chat.usernam
+    should_welc, cust_welcome, welc_type = sql.get_welc_pref(chat.id)
+    welc_mutes = sql.welcome_mutes(chat.id)
+    user_id = user.id
+    human_checks = sql.get_human_checks(user_id, chat.id)
 
     should_welc, cust_welcome, welc_type = sql.get_welc_pref(chat.id)
     if should_welc:
