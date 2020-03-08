@@ -39,10 +39,18 @@ if ENV:
         raise Exception("Your support users list does not contain valid integers.")
 
     try:
+		SPAMMERS = set(int(x) for x in os.environ.get("SPAMMERS", "").split())
+	except ValueError:
+		raise Exception("Your spammers users list does not contain valid integers.")
+
+    try:
         WHITELIST_USERS = set(int(x) for x in os.environ.get("WHITELIST_USERS", "").split())
     except ValueError:
         raise Exception("Your whitelisted users list does not contain valid integers.")
 
+
+
+    
     WEBHOOK = bool(os.environ.get('WEBHOOK', False))
     URL = os.environ.get('URL', "")  # Does not contain token
     PORT = int(os.environ.get('PORT', 5000))
@@ -117,6 +125,7 @@ dispatcher = updater.dispatcher
 SUDO_USERS = list(SUDO_USERS)
 WHITELIST_USERS = list(WHITELIST_USERS)
 SUPPORT_USERS = list(SUPPORT_USERS)
+SPAMMERS = list(SPAMMERS)
 
 # Load at end to ensure all prev variables have been set
 from haruka.modules.helper_funcs.handlers import CustomCommandHandler, CustomRegexHandler
@@ -128,7 +137,7 @@ if ALLOW_EXCL:
     tg.CommandHandler = CustomCommandHandler
 
 try:
-	from emilia.antispam import antispam_restrict_user, antispam_cek_user, detect_user
+	from haruka.antispam import antispam_restrict_user, antispam_cek_user, detect_user
 	antispam_module = True
 except ModuleNotFoundError:
 	antispam_module = False
