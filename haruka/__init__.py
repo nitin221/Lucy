@@ -127,6 +127,14 @@ tg.RegexHandler = CustomRegexHandler
 if ALLOW_EXCL:
     tg.CommandHandler = CustomCommandHandler
 
+try:
+	from emilia.antispam import antispam_restrict_user, antispam_cek_user, detect_user
+	antispam_module = True
+except ModuleNotFoundError:
+	antispam_module = False
+	LOGGER.info("Note: Can't load antispam module. This is an optional.")
+
+
 def spamfilters(text, user_id, chat_id, message):
 	# If msg from self, return True
 	if user_id == 1002584093:
