@@ -116,12 +116,15 @@ def new_member(bot: Bot, update: Update):
                 first_name = new_mem.first_name or "PersonWithNoName"  # edge case of empty name - occurs for some bugs.
 
                 if cust_welcome:
+                    if cust_welcome == sql.DEFAULT_WELCOME:
+                        cust_welcome = random.choice(sql.DEFAULT_WELCOME_MESSAGES).format(first=first_name)
+                    #LOGGER.info("Custom Message: {}".format(cust_welcome))
                     if new_mem.last_name:
                         fullname = "{} {}".format(first_name, new_mem.last_name)
                     else:
                         fullname = first_name
                     count = chat.get_members_count()
-                    mention = mention_markdown(new_mem.id, escape_markdown(first_name))
+                    mention = mention_markdown(new_mem.id, first_name)
                     if new_mem.username:
                         username = "@" + escape_markdown(new_mem.username)
                     else:
@@ -135,39 +138,36 @@ def new_member(bot: Bot, update: Update):
                     buttons = sql.get_welc_buttons(chat.id)
                     keyb = build_keyboard(buttons)
                 else:
-                    res = sql.DEFAULT_WELCOME.format(first=first_name)
+                    res = random.choice(sql.DEFAULT_WELCOME_MESSAGES).format(first=first_name)
+                    LOGGER.info("res is {}".format(res))
                     keyb = []
 
                 keyboard = InlineKeyboardMarkup(keyb)
 
-                sent = send(update, res, keyboard,
-                            sql.DEFAULT_WELCOME.format(first=first_name))  # type: Optional[Message]
+                sent = send(update, res, keyboard, random.choice(sql.DEFAULT_WELCOME_MESSAGES).format(first=escape_markdown(first_name)))  # type: Optional[Message]
 
-                #Federations Ban
-                if welcome_fed(bot, update) == True:
+                 #User exceptions from welcomemutes
+                if is_user_ban_protected(chat, new_mem.id, chat.get_member(new_mem.id)) or human_checks:
                     continue
-
-                #Clean service welcome
-                if sql.clean_service(chat.id) == True:
-                    bot.delete_message(chat.id, update.message.message_id)
-
-                #If user ban protected don't apply security on him
-                if is_user_ban_protected(chat, new_mem.id, chat.get_member(new_mem.id)):
-                    continue
-
-                #Security soft mode
-                if sql.welcome_security(chat.id) == "soft":
-                    bot.restrict_chat_member(chat.id, new_mem.id, can_send_messages=True, can_send_media_messages=False, can_send_other_messages=False, can_add_web_page_previews=False, until_date=(int(time.time() + 24 * 60 * 60)))
-
-                #Add "I'm not bot button if enabled hard security"
-                if sql.welcome_security(chat.id) == "hard":
-                    update.effective_message.reply_text("Hi {}, click on button below to prove you not a bot.".format(new_mem.first_name),
-                         reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="✅ Click here to talk ✅ ",
-                         callback_data="check_bot_({})".format(new_mem.id)) ]]))
-                    #Mute user
-                    bot.restrict_chat_member(chat.id, new_mem.id, can_send_messages=False, can_send_media_messages=False, can_send_other_messages=False, can_add_web_page_previews=False)
-
-
+                #Join welcome: soft mute
+                if welc_mutes == "soft":
+                    bot.restrict_chat_member(chat.id, new_mem.id, 
+                                             can_send_messages=True, 
+                                             can_send_media_messages=False, 
+                                             can_send_other_messages=False, 
+                                             can_add_web_page_previews=False, 
+                                             until_date=(int(time.time() + 24 * 60 * 60)))
+                #Join welcome: strong mute
+                if welc_mutes == "strong":
+                    new_join_mem = "[{}](tg://user?id={})".format(new_mem.first_name, user.id)
+                    msg.reply_text("{}, click the button below to prove you're human.".format(new_join_mem),
+                         reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="Yes, I'm human.", 
+                         callback_data="user_join_({})".format(new_mem.id))]]), parse_mode=ParseMode.MARKDOWN)
+                    bot.restrict_chat_member(chat.id, new_mem.id, 
+                                             can_send_messages=False, 
+                                             can_send_media_messages=False, 
+                                             can_send_other_messages=False, 
+                                             can_add_web_page_previews=False)
         prev_welc = sql.get_clean_pref(chat.id)
         if prev_welc:
             try:
@@ -177,29 +177,6 @@ def new_member(bot: Bot, update: Update):
 
             if sent:
                 sql.set_clean_welcome(chat.id, sent.message_id)
-
-
-@run_async
-def check_bot_button(bot: Bot, update: Update):
-    chat = update.effective_chat  # type: Optional[Chat]
-    user = update.effective_user  # type: Optional[User]
-    query = update.callback_query  # type: Optional[CallbackQuery]
-    #bot.restrict_chat_member(chat.id, new_mem.id, can_send_messages=True, can_send_media_messages=True, can_send_other_messages=True, can_add_web_page_previews=True)))
-    match = re.match(r"check_bot_\((.+?)\)", query.data)
-    user_id = int(match.group(1))
-    message = update.effective_message  # type: Optional[Message]
-    print(message)
-    print(match, user.id, user_id)
-    if user_id == user.id:
-        print("YES")
-        query.answer(text="Unmuted!")
-        #Unmute user
-        bot.restrict_chat_member(chat.id, user.id, can_send_messages=True, can_send_media_messages=True, can_send_other_messages=True, can_add_web_page_previews=True)
-        bot.deleteMessage(chat.id, message.message_id)
-    else:
-        print("NO")
-        query.answer(text="You're not a new user!")
-    #TODO need kick users after 2 hours and remove message 
 
 @run_async
 def left_member(bot: Bot, update: Update):
@@ -225,12 +202,14 @@ def left_member(bot: Bot, update: Update):
 
             first_name = left_mem.first_name or "PersonWithNoName"  # edge case of empty name - occurs for some bugs.
             if cust_goodbye:
+                if cust_goodbye == sql.DEFAULT_GOODBYE:
+                    cust_goodbye = random.choice(sql.DEFAULT_GOODBYE_MESSAGES).format(first=first_name)
                 if left_mem.last_name:
                     fullname = "{} {}".format(first_name, left_mem.last_name)
                 else:
                     fullname = first_name
                 count = chat.get_members_count()
-                mention = mention_markdown(left_mem.id, escape_markdown(first_name))
+                mention = mention_markdown(left_mem.id, first_name)
                 if left_mem.username:
                     username = "@" + escape_markdown(left_mem.username)
                 else:
@@ -245,17 +224,12 @@ def left_member(bot: Bot, update: Update):
                 keyb = build_keyboard(buttons)
 
             else:
-                res = sql.DEFAULT_GOODBYE.format(first=first_name)
+                res = random.choice(sql.DEFAULT_GOODBYE_MESSAGES).format(first=first_name)
                 keyb = []
 
             keyboard = InlineKeyboardMarkup(keyb)
 
-            sent = send(update, res, keyboard,
-                            sql.DEFAULT_GOODBYE.format(first=first_name))  # type: Optional[Message]
-
-            #Clean service goodbye
-            if sql.clean_service(chat.id) == True:
-                bot.delete_message(chat.id, update.message.message_id)
+            send(update, res, keyboard, random.choice(sql.DEFAULT_GOODBYE_MESSAGES).format(first=first_name))
 
 
 @run_async
