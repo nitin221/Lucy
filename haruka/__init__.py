@@ -38,11 +38,7 @@ if ENV:
     except ValueError:
         raise Exception("Your support users list does not contain valid integers.")
 
-    try:
-		SPAMMERS = set(int(x) for x in os.environ.get("SPAMMERS", "").split())
-	except ValueError:
-		raise Exception("Your spammers users list does not contain valid integers.")
-
+    
     try:
         WHITELIST_USERS = set(int(x) for x in os.environ.get("WHITELIST_USERS", "").split())
     except ValueError:
@@ -69,6 +65,7 @@ if ENV:
     TEMPORARY_DATA = os.environ.get('TEMPORARY_DATA', None)
     ALLOW_EXCL = os.environ.get('ALLOW_EXCL', False)
     GBAN_LOGS = os.environ.get('GBAN_LOGS', "")
+    SPAMMERS =os.environ.get('SPAMMERS', "")
 
 else:
     from haruka.config import Development as Config
@@ -112,6 +109,7 @@ else:
     TEMPORARY_DATA = Config.TEMPORARY_DATA
     ALLOW_EXCL = Config.ALLOW_EXCL
     GBAN_LOGS = Config.GBAN_LOGS
+    SPAMMERS = Config.SPAMMERS
 
 SUDO_USERS.add(OWNER_ID)
 
