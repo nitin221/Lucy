@@ -69,7 +69,7 @@ def new_fed(bot: Bot, update: Update, args: List[str]):
 
         print(fed_id)
         sql.new_fed(user.id, fed_name, fed_id)
-        update.effective_message.reply_text("*You have successfully created a new federation!*"\
+        update.effective_message.reply_text("*You have succeeded in creating a new federation!*"\
                         "\nName: `{}`"\
                         "\nID: `{}`"
                         "\n\nUse the below command to join the federation:"
@@ -94,7 +94,7 @@ def del_fed(bot: Bot, update: Update, args: List[str]):
             return
 
         if not is_user_fed_owner(fed_id, user.id):
-            update.effective_message.reply_text(tld(chat.id, "Only fed owner can do this!"))
+            update.effective_message.reply_text(tld(chat.id, "Only federation owners can do this!"))
             return
 
         sql.del_fed(fed_id, chat.id)
@@ -106,7 +106,7 @@ def fed_chat(bot: Bot, update: Update, args: List[str]):
         fed_id = sql.get_fed_id(chat.id)
 
         if not fed_id:
-            update.effective_message.reply_text(tld(chat.id, "This group not in any federation!"))
+            update.effective_message.reply_text(tld(chat.id, "This group is not in any federation!"))
             return
 
         print(fed_id)
@@ -138,10 +138,10 @@ def join_fed(bot: Bot, update: Update, args: List[str]):
                 if str(admin.user.id) == str(user.id):
                     pass
                 else:
-                    update.effective_message.reply_text(tld(chat.id, "Only group creator can do it!"))
+                    update.effective_message.reply_text(tld(chat.id, "Only group creators can use this command!"))
                     return
     if fed_id:
-        message.reply_text(tld(chat.id, "Uh, Are you gonna join two federations at one chat?"))
+        message.reply_text(tld(chat.id, "You cannot join two federations from one chat"))
         return
 
     if len(args) >= 1:
@@ -176,9 +176,9 @@ def leave_fed(bot: Bot, update: Update, args: List[str]):
                     return
 
     if sql.chat_leave_fed(chat.id) == True:
-        update.effective_message.reply_text(tld(chat.id, "Leaved from fed!"))
+        update.effective_message.reply_text(tld(chat.id, "Left!"))
     else:
-        update.effective_message.reply_text(tld(chat.id, "Why you are leaving feds when you have not join any!"))
+        update.effective_message.reply_text(tld(chat.id, "This group is not in any federation!"))
 
 
 def user_join_fed(bot: Bot, update: Update, args: List[str]):
