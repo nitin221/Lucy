@@ -446,6 +446,27 @@ def clean_welcome(bot: Bot, update: Update, args: List[str]) -> str:
         return ""
 
 
+@run_async
+@user_admin
+def cleanservice(bot: Bot, update: Update, args: List[str]) -> str:
+    chat = update.effective_chat  # type: Optional[Chat]
+    if chat.type != chat.PRIVATE:
+        if len(args) >= 1:
+            var = args[0]
+            print(var)
+            if (var == "no" or var == "off"):
+                sql.set_clean_service(chat.id, False)
+                update.effective_message.reply_text("I'll leave service messages")
+            elif(var == "yes" or var == "on"):
+                sql.set_clean_service(chat.id, True)
+                update.effective_message.reply_text("I will clean service messages")
+            else:
+                update.effective_message.reply_text("Please enter yes or no!", parse_mode=ParseMode.MARKDOWN)
+        else:
+            update.effective_message.reply_text("Please enter yes or no!", parse_mode=ParseMode.MARKDOWN)
+    else:
+        update.effective_message.reply_text("Please enter yes or no in your group!", parse_mode=ParseMode.MARKDOWN)
+
 
 @run_async
 @user_admin
@@ -644,6 +665,7 @@ CLEAN_WELCOME = CommandHandler("cleanwelcome", clean_welcome, pass_args=True, fi
 WELCOME_HELP = CommandHandler("welcomehelp", welcome_help)
 WELCOME_MUTE_HELP = CommandHandler("wlcmutehelp", welcome_mute_help)
 BUTTON_VERIFY_HANDLER = CallbackQueryHandler(user_button, pattern=r"user_join_")
+CLEAN_SERVICE_HANDLER = CommandHandler("cleanservice", cleanservice, pass_args=True, filters=Filters.group)
 
 dispatcher.add_handler(NEW_MEM_HANDLER)
 dispatcher.add_handler(LEFT_MEM_HANDLER)
@@ -658,3 +680,4 @@ dispatcher.add_handler(WELCOME_HELP)
 dispatcher.add_handler(WELCOMEMUTE_HANDLER)
 dispatcher.add_handler(BUTTON_VERIFY_HANDLER)
 dispatcher.add_handler(WELCOME_MUTE_HELP)
+dispatcher.add_handler(CLEAN_SERVICE_HANDLER)
