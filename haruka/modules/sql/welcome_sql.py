@@ -192,6 +192,7 @@ INSERTION_LOCK = threading.RLock()
 WELC_BTN_LOCK = threading.RLock()
 LEAVE_BTN_LOCK = threading.RLock()
 WM_LOCK = threading.RLock()
+CS_LOCK = threading.RLock()
 
 def welcome_mutes(chat_id):
     try:
