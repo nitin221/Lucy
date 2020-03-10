@@ -1,5 +1,6 @@
 import threading
 import random
+from typing import Union
 
 from sqlalchemy import Column, String, Boolean, UnicodeText, Integer, BigInteger
 
