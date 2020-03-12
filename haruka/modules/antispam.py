@@ -198,7 +198,7 @@ def gban(bot: Bot, update: Update, args: List[str]):
         message.reply_text("Done! This gban affected {} chats, Took {} sec".format(gbanned_chats, gban_time))
 
     try:
-        bot.send_message(user_id, "You have been globally banned from all groups where I have administrative permissions. If you think that this was a mistake, you may appeal your ban here: @onepunchsupport", parse_mode=ParseMode.HTML)
+        bot.send_message(user_id, "You have been globally banned from all groups where I have administrative permissions. If you think that this was a mistake, you may appeal your ban here: @LucySupportChat", parse_mode=ParseMode.HTML)
     except:
         pass # bot probably blocked by user
 
