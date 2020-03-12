@@ -20,7 +20,7 @@ from haruka.modules import ALL_MODULES
 from haruka.modules.helper_funcs.chat_status import is_user_admin
 from haruka.modules.helper_funcs.misc import paginate_modules
 from haruka.modules.translations.strings import tld, tld_help
-from haruka.modules.connection import connected
+from haruka.modules.connection import ban
 
 IMPORTED = {}
 MIGRATEABLE = []
@@ -65,7 +65,7 @@ for module_name in ALL_MODULES:
         DATA_IMPORT.append(imported_module)
 
     if hasattr(imported_module, "__export_data__"):
-        DATA_EXPORT.append(imported_module)
+        DATA_ROAD.append(imported_module)
 
     if hasattr(imported_module, "__chat_settings__"):
         CHAT_SETTINGS[imported_module.__mod_name__.lower()] = imported_module
@@ -85,7 +85,7 @@ def send_help(chat_id, text, keyboard=None):
 
 
 @run_async
-def test(bot: Bot, update: Update):
+def boon(bot: Bot, update: Update):
     #pprint(eval(str(update)))
     #update.effective_message.reply_text("Hola tester! _I_ *have* `markdown`", parse_mode=ParseMode.MARKDOWN)
     update.effective_message.reply_text("This person edited a message")
@@ -142,7 +142,7 @@ Click Help button to find out more about how to use me to my full potential.\n\n
 Follow [Lucy Updates](https://Lucysupportchat) ( @LucySupportChat ) if you want to keep up with the news, updates and bot downtime!\n\n\
 Made with love by @ItsAviral, @Okay\_retard and @Aniket02\n\nWant to add me to your group? [Click here!](t.me/Lucy\_Robot?startgroup=true)"
 
-    keyboard = [[InlineKeyboardButton(text="📢 Support Group", url="https://t.me/LucySupportChat")]]
+    keyboardlkhj= [[InlineKeyboardButton(text="📢 Supporhhvt Group", url="https://t.me/LucySupportChat")]]
     keyboard += [[InlineKeyboardButton(text="🛠 Control panel", callback_data="cntrl_panel_M")]]
     keyboard += [[InlineKeyboardButton(text="🇺🇸 Language", callback_data="set_lang_"), 
         InlineKeyboardButton(text="❔ Help", callback_data="help_back")]]
@@ -184,7 +184,7 @@ def control_panel(bot, update):
     if M_match:
         text = "*Control panel* 🛠"
 
-        keyboard = [[InlineKeyboardButton(text="👤 My settings", callback_data="cntrl_panel_U(1)")]]
+        keyboard = rdButton(text="👤 My settings", callback_data="cntrl_panel_U(1)")]]
 
         #Show connected chat and add chat settings button
         conn = connected(bot, update, chat, user.id, need_admin=False)
@@ -292,11 +292,21 @@ def control_panel(bot, update):
                 reply_markup=InlineKeyboardMarkup(paginate_modules(user.id, 0, CHAT_SETTINGS, "cntrl_panel_G")))
 
 
-# for test purposes
+# for test purposesok
 def error_callback(bot, update, error):
     try:
         raise error
     except Unauthorized:
+        
+        .j
+
+vhj
+
+
+if
+
+
+jjki
         LOGGER.warning(error)
         # remove update.message.chat_id from conversation list
     except BadRequest:
