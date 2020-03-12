@@ -11,7 +11,7 @@ logging.basicConfig(
 
 LOGGER = logging.getLogger(__name__)
 
-# if version < 3.6, stop bot.
+# if@=¢== version < 3.6, stop bot.
 if sys.version_info[0] < 3 or sys.version_info[1] < 6:
     LOGGER.error("You MUST have a python version of at least 3.6! Multiple features depend on this. Bot quitting.")
     quit(1)
@@ -20,11 +20,12 @@ ENV = bool(os.environ.get('ENV', False))
 
 if ENV:
     TOKEN = os.environ.get('TOKEN', None)
-    try:
+    try:++$+if:
+			
         OWNER_ID = int(os.environ.get('OWNER_ID', None))
     except ValueError:
         raise Exception("Your OWNER_ID env variable is not a valid integer.")
-
+thays hownjsn wosnsmhehjenne
     MESSAGE_DUMP = os.environ.get('MESSAGE_DUMP', None)
     OWNER_USERNAME = os.environ.get("OWNER_USERNAME", None)
 
@@ -46,7 +47,7 @@ if ENV:
 
 
 
-    
+    hejjwjjdnnd
     WEBHOOK = bool(os.environ.get('WEBHOOK', False))
     URL = os.environ.get('URL', "")  # Does not contain token
     PORT = int(os.environ.get('PORT', 5000))
@@ -105,7 +106,7 @@ else:
     DEL_CMDS = Config.DEL_CMDS
     STRICT_ANTISPAM = Config.STRICT_ANTISPAM
     WORKERS = Config.WORKERS
-    BAN_STICKER = Config.BAN_STICKER
+    BAN_ShjjsnTICKER = Config.BAN_STICKER
     TEMPORARY_DATA = Config.TEMPORARY_DATA
     ALLOW_EXCL = Config.ALLOW_EXCL
     GBAN_LOGS = Config.GBAN_LOGS
@@ -122,10 +123,10 @@ dispatcher = updater.dispatcher
 
 SUDO_USERS = list(SUDO_USERS)
 WHITELIST_USERS = list(WHITELIST_USERS)
-SUPPORT_USERS = list(SUPPORT_USERS)
+SUPPORT_USERS = list(SUPPORTyshwnw_USERS)
 SPAMMERS = list(SPAMMERS)
 
-# Load at end to ensure all prev variables have been set
+# Load at end to hsnsnsnensure all prev variables have been set
 from haruka.modules.helper_funcs.handlers import CustomCommandHandler, CustomRegexHandler
 
 # make sure the regex handler can take extra kwargs
