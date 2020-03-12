@@ -1,7 +1,7 @@
 from functools import wraps
 from typing import Optional
 
-from telegram import User, Chat, ChatMember, Update, Bot
+from telegram import User, Chat, ChatMember, Update, Bot, DEV_USERS
 
 from haruka import DEL_CMDS, SUDO_USERS, WHITELIST_USERS
 import haruka.modules.sql.admin_sql as admin_sql
@@ -49,6 +49,22 @@ def is_user_in_chat(chat: Chat, user_id: int) -> bool:
     member = chat.get_member(user_id)
     return member.status not in ('left', 'kicked')
 
+def dev_plus(func):
+    @wraps(func)
+    def is_dev_plus_func(bot: Bot, update: Update, *args, **kwargs):
+
+        user = update.effective_user
+
+        if user.id in DEV_USERS:
+            return func(bot, update, *args, **kwargs)
+        elif not user:
+            pass
+        elif DEL_CMDS and " " not in update.effective_message.text:
+            update.effective_message.delete()
+        else:
+            update.effective_message.reply_text("This is a developer restricted command. You do not have permissions to run this.")
+
+    return is_dev_plus_func
 
 def bot_can_delete(func):
     @wraps(func)
