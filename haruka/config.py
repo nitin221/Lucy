@@ -32,7 +32,7 @@ class Config(object):
     ALLOW_EXCL = False  # Allow ! commands as well as /
     GBAN_LOGS = ""
     SPAMMERS = ""
-
+    DEV_USERS = []
 class Production(Config):
     LOGGER = False
 
