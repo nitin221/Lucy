@@ -25,7 +25,7 @@ if ENV:
         OWNER_ID = int(os.environ.get('OWNER_ID', None))
     except ValueError:
         raise Exception("Your OWNER_ID env variable is not a valid integer.")
-thays hownjsn wosnsmhehjenne
+
     MESSAGE_DUMP = os.environ.get('MESSAGE_DUMP', None)
     OWNER_USERNAME = os.environ.get("OWNER_USERNAME", None)
 
