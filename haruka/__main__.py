@@ -122,7 +122,7 @@ def start(bot: Bot, update: Update, args: List[str]):
             send_start(bot, update)
     else:
         try:
-            update.effective_message.reply_text("Yo! whadup?")
+            update.effective_message.reply_text("Yes?")
         except:
             print("Nut")
 
