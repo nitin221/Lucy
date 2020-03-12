@@ -1,9 +1,9 @@
 from functools import wraps
 from typing import Optional
 
-from telegram import User, Chat, ChatMember, Update, Bot, DEV_USERS
+from telegram import User, Chat, ChatMember, Update, Bot,
 
-from haruka import DEL_CMDS, SUDO_USERS, WHITELIST_USERS
+from haruka import DEL_CMDS, SUDO_USERS, WHITELIST_USERS, DEV_USERS
 import haruka.modules.sql.admin_sql as admin_sql
 from haruka.modules.translations.strings import tld
 
