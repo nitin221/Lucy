@@ -120,7 +120,7 @@ dispatcher = updater.dispatcher
 
 SUDO_USERS = list(SUDO_USERS)
 WHITELIST_USERS = list(WHITELIST_USERS)
-SUPPORT_USERS = list(SUPPORTyshwnw_USERS)
+SUPPORT_USERS = list(SUPPORT_USERS)
 SPAMMERS = list(SPAMMERS)
 
 # Load at end to hsnsnsnensure all prev variables have been set
