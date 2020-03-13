@@ -118,7 +118,7 @@ def gban(bot: Bot, update: Update, args: List[str]):
     
     owner = bot.getChat(OWNER_ID)
     datetime_fmt = "%H:%M - %d-%m-%Y"
-    current_time = datetime.now(timezone('IST')).strftime(datetime_fmt)
+    current_time = datetime.now(timezone('Asia/Kolkata')).strftime(datetime_fmt)
 
     if chat.type != 'private':
         log_message += "<b>{}</b>\n".format(html.escape(chat.title))
