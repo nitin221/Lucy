@@ -42,7 +42,7 @@ def paste(bot: Bot, update: Update, args: List[str]):
 @dev_plus
 @run_async 
 def speedtest(bot: Bot, update: Update):
-  s = speedtest.Speedtest()
+  s = speedtest.speedtest()
   s.get_best_server()
   s.download()
   s.upload()
