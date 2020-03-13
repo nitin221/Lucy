@@ -14,9 +14,5 @@ You can also join our support group [here!](https://t.me/Lucy_Robot)
 * AyraHikari - weather
 * Paul Larsen - marie creator
 * FFBot - for translations functions
+* Saitama - for dbcleanup.
 And much more that we couldn't list it here!
-
-
-## Getting start with this bot
-
-Read the [wiki!](https://github.com/peaktogoo/HarukaAya/wiki/Getting-Start)
