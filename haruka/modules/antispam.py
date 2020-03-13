@@ -190,11 +190,11 @@ def gban(bot: Bot, update: Update, args: List[str]):
         send_to_list(bot, SUDO_USERS + SUPPORT_USERS, "Gban complete! (User banned in {} chats)".format(gbanned_chats))
     
     end_time = time.time()
-    gban_time = round((end_time - start_time), 3)
+    gban_time = round((end_time - start_time), 2)
 
     if gban_time > 60:
         gban_time = gban_time / 60
-        gt = round((gban_time), 3)
+        gt = round((gban_time), 2)
         message.reply_text("Done! This gban affected {} chats, Took {} min".format(gbanned_chats, gt))
     else:
         message.reply_text("Done! This gban affected {} chats, Took {} sec".format(gbanned_chats, gban_time))
@@ -259,18 +259,18 @@ def ungban(bot: Bot, update: Update, args: List[str]):
     sql.ungban_user(user_id)
 
     send_to_list(bot, SUDO_USERS + SUPPORT_USERS, "un-gban complete!")
-
-    message.reply_text("Person has been un-gbanned.")
     end_time = time.time()
-    ungban_time = round((end_time - start_time), 3)
+    ungban_time = round((end_time - start_time), 2)
 
     if ungban_time > 60:
         ungban_time = ungban_time / 60
-        ugt = round((ungban_time), 3)
-        message.reply_text("Done! User un-gbanned.Took `{}` min".format(ugt))
+        ugt = round((ungban_time), 2)
+        message.reply_text("Person has been un-gbanned.Took {} min".format(ugt))
     else:
-        message.reply_text("Done! User un-gbanned.Took `{}` sec".format(ungban_time))
+        message.reply_text("Person has been un-gbanned.Took {} sec".format(ungban_time))
 
+    
+    
 
 @run_async
 def gbanlist(bot: Bot, update: Update):
