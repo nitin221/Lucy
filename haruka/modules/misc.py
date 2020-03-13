@@ -3,6 +3,7 @@ import html
 import json
 import random
 import time
+import speedtest
 import pyowm
 import re
 from pyowm import timeutils, exceptions
@@ -448,6 +449,15 @@ def get_paste_stats(bot: Bot, update: Update, args: List[str]):
     update.effective_message.reply_text(reply, parse_mode=ParseMode.MARKDOWN)
 
 @run_async
+def speedtst(bot: Bot, update: Update):
+    test = speedtest.Speedtest()
+    test.get_best_server()
+    test.download()
+    test.upload()
+    speedtest_image = test.results.share() 
+    update.effective_message.reply_photo(photo=speedtest_image, caption = 'Done!')
+    
+@run_async
 def ud(bot: Bot, update: Update):
   message = update.effective_message
   text = message.text[len('/ud '):]
@@ -503,7 +513,7 @@ __help__ = """
  - /stickerid: reply to a sticker to me to tell you its file ID.
  - /getsticker: reply to a sticker to me to upload its raw PNG file.
  - /markdownhelp: quick summary of how markdown works in telegram - can only be called in private chats.
-
+ 
  - /git: Returns info about a GitHub user or organization.
  - /repo: Return the GitHub user or organization repository list (Limited at 40)
  - /lyrics: Find your favorite songs lyrics!
@@ -530,6 +540,7 @@ SLAP_HANDLER = DisableAbleCommandHandler("slap", slap, pass_args=True, admin_ok=
 INFO_HANDLER = DisableAbleCommandHandler("info", info, pass_args=True, admin_ok=True)
 GITHUB_HANDLER = DisableAbleCommandHandler("git", github, admin_ok=True)
 REPO_HANDLER = DisableAbleCommandHandler("repo", repo, pass_args=True, admin_ok=True)
+SPEED_HANDLER = CommandHandler("speedtest", speedtst, filters=CustomFilters.sudo_filter) 
 
 ECHO_HANDLER = CommandHandler("echo", echo, filters=CustomFilters.sudo_filter)
 MD_HELP_HANDLER = CommandHandler("markdownhelp", markdown_help, filters=Filters.private)
@@ -558,7 +569,7 @@ dispatcher.add_handler(ECHO_HANDLER)
 dispatcher.add_handler(MD_HELP_HANDLER)
 dispatcher.add_handler(STATS_HANDLER)
 dispatcher.add_handler(GDPR_HANDLER)
-
+dispatcher.add_handler(SPEED_HANDLER)
 #dispatcher.add_handler(GOOGLE_HANDLER)
 dispatcher.add_handler(GITHUB_HANDLER)
 dispatcher.add_handler(LYRICS_HANDLER)
