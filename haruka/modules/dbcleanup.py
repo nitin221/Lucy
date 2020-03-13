@@ -163,7 +163,7 @@ def leave_muted_chats(bot: Bot, update: Update):
     muted_chats = get_muted_chats(bot, update)
 
     buttons = [
-        [InlineKeyboardButton("Leave chats", callback_data=f"db_leave_chat")]
+        [InlineKeyboardButton("Leave chats", callback_data=f"db_leave_muted_chats")]
     ]
 
     update.effective_message.reply_text(f"I am muted in {muted_chats} chats.", reply_markup=InlineKeyboardMarkup(buttons))
