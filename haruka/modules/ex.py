@@ -6,12 +6,12 @@ from telegram import Update, Bot, ParseMode
 
 from telegram.ext import run_async
 
-from tg_bot.modules.disable import DisableAbleCommandHandler
+from haruka.modules.disable import DisableAbleCommandHandler
 
-from tg_bot import dispatcher
+from haruka import dispatcher
 import speedtest
 
-from tg_bot.modules.helper_funcs.chat_status import dev_plus
+from haruka.modules.helper_funcs.chat_status import dev_plus
 
 def paste(bot: Bot, update: Update, args: List[str]):
 
