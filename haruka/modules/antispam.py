@@ -68,17 +68,17 @@ def gban(bot: Bot, update: Update, args: List[str]):
     
 
     if int(user_id) in SUDO_USERS:
-        message.reply_text("I spy, with my little eye... a sudo user war! Why are you guys turning on each other?")
+        message.reply_text("That's a sudo user! I can't gban them.")
         return
 
     if int(user_id) in SUPPORT_USERS:
-        message.reply_text("OOOH someone's trying to gban a Demon Disaster! *grabs popcorn*")
+        message.reply_text("I can't gban them. They lil nibbas, Let them live in Peace.")
         return
 
     
 
     if user_id == bot.id:
-        message.reply_text("You uhh...want me to punch myself?")
+        message.reply_text("Bhag Bhosdike")
         return
 
     try:
