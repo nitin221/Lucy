@@ -4,11 +4,11 @@ from telegram import Bot, Update, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.error import BadRequest, Unauthorized
 from telegram.ext import CommandHandler, CallbackQueryHandler, run_async
 
-from tg_bot import dispatcher, OWNER_ID, DEV_USERS
-from tg_bot.modules.helper_funcs.chat_status import dev_plus
+from haruka import dispatcher, OWNER_ID, DEV_USERS
+from haruka.modules.helper_funcs.chat_status import dev_plus
 
-import tg_bot.modules.sql.users_sql as user_sql
-import tg_bot.modules.sql.global_bans_sql as gban_sql
+import haruka.modules.sql.users_sql as user_sql
+import haruka.modules.sql.antispam_sql as gban_sql
 
 
 def get_invalid_chats(bot: Bot, update: Update, remove: bool = False):
