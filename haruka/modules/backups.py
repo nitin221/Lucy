@@ -80,7 +80,7 @@ def import_data(bot: Bot, update):
 
 		try:
 			# If backup is from Emilia
-			if data.get('bot_base') == "Kanna":
+			if data.get('bot_base') == "Lucy":
 				imp_antiflood = False
 				imp_blacklist = False
 				imp_blacklist_count = 0
@@ -278,7 +278,7 @@ def import_data(bot: Bot, update):
 				if imp_locks:
 					text += tld(update.effective_message, "- Lockup\n")
 				if imp_notes:
-					text += tld(update.effective_message, "- {} a note\n").format(imp_notes)
+					text += tld(update.effective_message, "- {} Notes\n").format(imp_notes)
 				if imp_report:
 					text += tld(update.effective_message, "- Reporting arrangements\n")
 				if imp_rules:
@@ -552,7 +552,7 @@ def export_data(bot: Bot, update: Update, chat_data):
 	# Backup version
 	# Revision: 07/07/2019
 	backup_ver = 1
-	bot_base = "Kanna"
+	bot_base = "Lucy"
 
 	# Make sure this backup is for this bot
 	bot_id = bot.id
@@ -680,7 +680,7 @@ def export_data(bot: Bot, update: Update, chat_data):
 
 
 	all_backups = json.dumps(backup, indent=4, cls=SetEncoder)
-	f = open("{}-Kanna.backup".format(chat_id), "w")
+	f = open("{}-Lucy.backup".format(chat_id), "w")
 	f.write(str(all_backups))
 	f.close()
 	bot.sendChatAction(current_chat_id, "upload_document")
@@ -695,7 +695,7 @@ def export_data(bot: Bot, update: Update, chat_data):
 		bot.sendDocument(TEMPORARY_DATA, document=send.document.file_id, caption=tld(update.effective_message, "*Successfully backed up for:*\nChat Name: `{}`\nVhat ID: `{}`\nOn: `{}`\n\nNote: This backup is specific to this bo").format(chat.title, chat_id, tgl), timeout=360, parse_mode=ParseMode.MARKDOWN)
 	except BadRequest:
 		pass
-	os.remove("{}-Kanna.backup".format(chat_id)) # Cleaning file
+	os.remove("{}-Lucy.backup".format(chat_id)) # Cleaning file
 
 
 class SetEncoder(json.JSONEncoder):
