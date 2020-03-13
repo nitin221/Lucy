@@ -1,7 +1,7 @@
 # Lucy
 A modular Telegram Python bot running on python3 with an sqlalchemy database.
 
-Can be found on telegram as [Haruka Aya](https://t.me/Lucy_Robot).
+Can be found on telegram as [Lucy](https://t.me/Lucy_Robot).
 
 Alternatively, [find me on telegram](https://t.me/ItsAviral)! (Keep all support questions in the support chat, where more people can help you.)
 
