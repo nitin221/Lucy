@@ -190,7 +190,7 @@ def gban(bot: Bot, update: Update, args: List[str]):
         send_to_list(bot, SUDO_USERS + SUPPORT_USERS, "Gban complete! (User banned in {} chats)".format(gbanned_chats))
     
     end_time = time.time()
-    gban_time = round((end_time - start_time), 3/60)
+    gban_time = round((end_time - start_time), 3)/60
 
     if gban_time > 60:
         gban_time = gban_time / 60
