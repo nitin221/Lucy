@@ -29,3 +29,5 @@ jikanpy
 psutil
 speedtest-cli>=2.0.2
 gTTS
+tzlocal
+pytz
