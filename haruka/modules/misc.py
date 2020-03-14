@@ -132,51 +132,64 @@ def get_id(bot: Bot, update: Update, args: List[str]):
 
 @run_async
 def info(bot: Bot, update: Update, args: List[str]):
-    msg = update.effective_message  # type: Optional[Message]
+
+    message = update.effective_message
+    chat = update.effective_chat
     user_id = extract_user(update.effective_message, args)
-    chat = update.effective_chat  # type: Optional[Chat]
 
     if user_id:
         user = bot.get_chat(user_id)
 
-    elif not msg.reply_to_message and not args:
-        user = msg.from_user
+    elif not message.reply_to_message and not args:
+        user = message.from_user
 
-    elif not msg.reply_to_message and (not args or (
-            len(args) >= 1 and not args[0].startswith("@") and not args[0].isdigit() and not msg.parse_entities(
+    elif not message.reply_to_message and (not args or (
+            len(args) >= 1 and not args[0].startswith("@") and not args[0].isdigit() and not message.parse_entities(
         [MessageEntity.TEXT_MENTION]))):
-        msg.reply_text(tld(chat.id, "I can't extract a user from this."))
+        message.reply_text("I can't extract a user from this.")
         return
 
     else:
         return
 
-    text =  tld(chat.id, "<b>User info</b>:")
-    text += "\nID: <code>{}</code>".format(user.id)
-    text += tld(chat.id, "\nFirst Name: {}").format(html.escape(user.first_name))
+    text = "<b>Characteristics:</b>" \
+           "\nID: <code>{}</code>" \
+           "\nFirst Name: {}".format(user.id, html.escape(user.first_name))
 
     if user.last_name:
-        text += tld(chat.id, "\nLast Name: {}").format(html.escape(user.last_name))
+        text += "\nLast Name: {}".format(html.escape(user.last_name))
 
     if user.username:
-        text += tld(chat.id, "\nUsername: @{}").format(html.escape(user.username))
+        text += "\nUsername: @{}".format(html.escape(user.username))
 
-    text += tld(chat.id, "\nPermanent user link: {}").format(mention_html(user.id, "link"))
+    text += "\nPermanent user link: {}".format(mention_html(user.id, "link"))
 
-    if user.id == OWNER_ID:
-        text += tld(chat.id, "\n\nAy, This guy is my owner. I would never do anything against him!")
-    else:
-        if user.id in SUDO_USERS:
-            text += tld(chat.id, "\nThis person is one of my sudo users! " \
-            "Nearly as powerful as my owner - so watch it.")
-        else:
-            if user.id in SUPPORT_USERS:
-                text += tld(chat.id, "\nThis person is one of my support users! " \
-                        "Not quite a sudo user, but can still gban you off the map.")
+    disaster_level_present = False
+    
+    if user.id in DEV_USERS:
+        text += "\nThe Disaster level of this person is 'God'."
+        disaster_level_present = True
+    
+    elif user.id in SUDO_USERS:
+        text += "\nnThis person is one of my sudo users! " \
+            "Nearly as powerful as my owner - so watch it.."
+        disaster_level_present = True
+    elif user.id in SUPPORT_USERS:
+        text+= "\nThis person is one of my support users! " \
+                        "Not quite a sudo user, but can still gban you off the map."
+        disaster_level_present = True
+    else user.id in WHITELIST_USERS:
+        text += "\nThis person has been whitelisted! " \
+                        "That means I'm not allowed to ban/kick them."
+        disaster_level_present = True
 
-            if user.id in WHITELIST_USERS:
-                text += tld(chat.id, "\nThis person has been whitelisted! " \
-                        "That means I'm not allowed to ban/kick them.")
+    user_member = chat.get_member(user.id)
+    if user_member.status == 'administrator':
+        result = requests.post(f"https://api.telegram.org/bot{TOKEN}/getChatMember?chat_id={chat.id}&user_id={user.id}")
+        result = result.json()["result"]
+        if "custom_title" in result.keys():
+            custom_title = result['custom_title']
+            text += f"\n\nThis user holds the title <b>{custom_title}</b> here."
 
     for mod in USER_INFO:
         try:
@@ -187,6 +200,7 @@ def info(bot: Bot, update: Update, args: List[str]):
             text += "\n\n" + mod_info
 
     update.effective_message.reply_text(text, parse_mode=ParseMode.HTML, disable_web_page_preview=True)
+
 
 
 @run_async
