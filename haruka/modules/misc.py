@@ -164,7 +164,7 @@ def info(bot: Bot, update: Update, args: List[str]):
     text += tld(chat.id, "\nPermanent user link: {}").format(mention_html(user.id, "link"))
 
     if user.id in DEV_USERS:
-        text += tld(chat.id, "\n\nAy, This guy is my owner. I would never do anything against him!")
+        text += tld(chat.id, "\n\nThe Disaster level of this person is 'God'")
     else:
         if user.id in SUDO_USERS:
             text += tld(chat.id, "\nThis person is one of my sudo users! " \
