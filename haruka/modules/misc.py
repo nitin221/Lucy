@@ -19,7 +19,7 @@ from telegram import ParseMode, ReplyKeyboardRemove, ReplyKeyboardMarkup
 from telegram.ext import CommandHandler, run_async, Filters
 from telegram.utils.helpers import escape_markdown, mention_html
 
-from haruka import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, WHITELIST_USERS, BAN_STICKER
+from haruka import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, WHITELIST_USERS, BAN_STICKER, DEV_USERS
 from haruka.__main__ import GDPR
 from haruka.__main__ import STATS, USER_INFO
 from haruka.modules.disable import DisableAbleCommandHandler
@@ -163,7 +163,7 @@ def info(bot: Bot, update: Update, args: List[str]):
 
     text += tld(chat.id, "\nPermanent user link: {}").format(mention_html(user.id, "link"))
 
-    if user.id == OWNER_ID:
+    if user.id in DEV_USERS:
         text += tld(chat.id, "\n\nAy, This guy is my owner. I would never do anything against him!")
     else:
         if user.id in SUDO_USERS:
