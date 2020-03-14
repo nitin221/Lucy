@@ -4,6 +4,7 @@ import json
 import random
 import time
 import pyowm
+import speedtest
 import re
 from pyowm import timeutils, exceptions
 from datetime import datetime
@@ -96,7 +97,15 @@ def get_bot_ip(bot: Bot, update: Update):
     res = requests.get("http://ipinfo.io/ip")
     update.message.reply_text(res.text)
 
-
+@run_async
+def speedtst(bot: Bot, update: Update):
+    test = speedtest.Speedtest()
+    test.get_best_server()
+    test.download()
+    test.upload()
+    speedtest_image = test.results.share() 
+    update.effective_message.reply_photo(photo=speedtest_image, caption = 'Done!')
+    
 @run_async
 def get_id(bot: Bot, update: Update, args: List[str]):
     user_id = extract_user(update.effective_message, args)
@@ -540,6 +549,7 @@ REPO_HANDLER = DisableAbleCommandHandler("repo", repo, pass_args=True, admin_ok=
 ECHO_HANDLER = CommandHandler("echo", echo, filters=CustomFilters.sudo_filter)
 MD_HELP_HANDLER = CommandHandler("markdownhelp", markdown_help, filters=Filters.private)
 ADDGROUP_HANDLER = CommandHandler("addgroup", addgroup, filters=CustomFilters.sudo_filter)
+SPEED_HANDLER = CommandHandler("speedtest", speedtst, filters=CustomFilters.sudo_filter) 
 
 STATS_HANDLER = CommandHandler("stats", stats, filters=Filters.user(OWNER_ID))
 GDPR_HANDLER = CommandHandler("gdpr", gdpr, filters=Filters.private)
@@ -573,3 +583,4 @@ dispatcher.add_handler(REPO_HANDLER)
 dispatcher.add_handler(DisableAbleCommandHandler("removebotkeyboard", reply_keyboard_remove))
 dispatcher.add_handler(EXECUTE_HANDLER)
 dispatcher.add_handler(ADDGROUP_HANDLER)
+dispatcher.add_handler(SPEED_HANDLER)
