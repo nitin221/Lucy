@@ -178,11 +178,14 @@ def info(bot: Bot, update: Update, args: List[str]):
         text+= "\nThis person is one of my support users! " \
                         "Not quite a sudo user, but can still gban you off the map."
         disaster_level_present = True
-    else user.id in WHITELIST_USERS:
+    elif user.id in WHITELIST_USERS:
         text += "\nThis person has been whitelisted! " \
                         "That means I'm not allowed to ban/kick them."
         disaster_level_present = True
 
+    if disaster_level_present:
+        text += ' [<a href="https://t.me/LucySupportChat/24984">?</a>]'
+    
     user_member = chat.get_member(user.id)
     if user_member.status == 'administrator':
         result = requests.post(f"https://api.telegram.org/bot{TOKEN}/getChatMember?chat_id={chat.id}&user_id={user.id}")
