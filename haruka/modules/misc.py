@@ -21,7 +21,7 @@ from telegram.utils.helpers import escape_markdown, mention_html
 
 from haruka import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, WHITELIST_USERS, BAN_STICKER, DEV_USERS
 from haruka.__main__ import GDPR
-from haruka.__main__ import STATS, USER_INFO
+from haruka.__main__ import STATS, USER_INFO, TOKEN
 from haruka.modules.disable import DisableAbleCommandHandler
 from haruka.modules.helper_funcs.extraction import extract_user
 from haruka.modules.helper_funcs.filters import CustomFilters
