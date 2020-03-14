@@ -9,7 +9,7 @@ from telegram.error import TimedOut, NetworkError
 from telegram import ParseMode
 
 from haruka.modules.helper_funcs.filters import CustomFilters
-from haruka import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS
+from haruka import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, DEV_USERS
 from telegram.ext import CommandHandler, run_async, Filters, Updater
 from haruka.modules.disable import DisableAbleCommandHandler
 from telegram.ext.dispatcher import run_async
@@ -148,8 +148,8 @@ def error_callback(bot, update, error):
 __mod_name__ = "Eval Module"
 
 
-EVAL_HANDLER = CommandHandler("eval", evaluate, filters=Filters.user(OWNER_ID))
-exec_handle = CommandHandler(["x", "ex", "exe", "exec", "py"], execute, filters=Filters.user(OWNER_ID))
+EVAL_HANDLER = CommandHandler("eval", evaluate, filters=CustomFilters.dev_filter)
+exec_handle = CommandHandler(["x", "ex", "exe", "exec", "py"], execute, filters=CustomFilters.dev_filter)
 clear_handle = CommandHandler('clearlocals', clear)
 
 dispatcher.add_handler(EVAL_HANDLER)
