@@ -50,7 +50,7 @@ if ENV:
     
     WEBHOOK = bool(os.environ.get('WEBHOOK', False))
     URL = os.environ.get('URL', "")  # Does not contain token
-    PORT = int(os.environ.get('PORT', 5000))
+    PORT = int(os.environ.get('PORT', 9001))
     CERT_PATH = os.environ.get("CERT_PATH")
 
     DB_URI = os.environ.get('DATABASE_URL')
@@ -59,10 +59,8 @@ if ENV:
     NO_LOAD = os.environ.get("NO_LOAD", "").split()
     DEL_CMDS = bool(os.environ.get('DEL_CMDS', False))
     STRICT_ANTISPAM = bool(os.environ.get('STRICT_ANTISPAM', False))
-    WORKERS = int(os.environ.get('WORKERS', 8))
+    WORKERS = int(os.environ.get('WORKERS', 4))
     BAN_STICKER = os.environ.get('BAN_STICKER', 'CAADBQADTQEAAupFXico2ds1vUzopRYE')
-    STRICT_GMUTE = False
-    STRICT_GBAN = False
     TEMPORARY_DATA = os.environ.get('TEMPORARY_DATA', None)
     ALLOW_EXCL = os.environ.get('ALLOW_EXCL', False)
     GBAN_LOGS = os.environ.get('GBAN_LOGS', "")
