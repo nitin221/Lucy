@@ -1,18 +1,18 @@
 # Lucy
 A modular Telegram Python bot running on python3 with an sqlalchemy database.
+Kanged Unofficial fork of Haruka.
 
-Can be found on telegram as [Lucy](https://t.me/Lucy_Robot).
-
-Alternatively, [find me on telegram](https://t.me/ItsAviral)! (Keep all support questions in the support chat, where more people can help you.)
-
-You can also join our support group [here!](https://t.me/Lucy_Robot)
+# Note 
+I will be not responsible If u got gbanned because of violating the gpl
+So that's why I'm suggesting u to use official repo.
 
 ## Thanks to
 
-* Skittle - for memes and sticker stuff
-* 1mavarick1 - gmutes, etc 
-* AyraHikari - weather
-* Paul Larsen - marie creator
+* Skittle - for memes and sticker stuff from (skittbot).
+* 1mavarick1 - gmutes, welcomemutes etc.
+* Mryacha - Connection and feds from (Yanabot)
+* AyraHikari - weather, Backup and cleanbluetext etc. (Emilia)
+* Paul Larsen - (marie) creator
 * FFBot - for translations functions
-* Saitama - for dbcleanup.
+* Saitama - kanged and leeched from dbcleanup. antispam
 And much more that we couldn't list it here!
