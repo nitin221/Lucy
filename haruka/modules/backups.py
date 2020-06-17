@@ -725,7 +725,13 @@ def get_chat(chat_id, chat_data):
 
 __mod_name__ = "Import/Export"
 
-__help__ = "backups_help"
+__help__ = """
+Chat admins only can use;
+
+- /import: <for> importing the exported file to get chat data like notes.
+
+- /export: <for> Export ur Chat data this will help u to restore ur chat data.
+"""
 
 IMPORT_HANDLER = CommandHandler("import", import_data, filters=Filters.group)
 EXPORT_HANDLER = CommandHandler("export", export_data, pass_chat_data=True)
