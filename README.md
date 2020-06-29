@@ -18,5 +18,5 @@ So that's why I'm suggesting u to use official repo. fell free to give gban to [
 * AyraHikari - weather, Backup and cleanbluetext etc. (Emilia)
 * Paul Larsen - (marie) creator
 * FFBot - for translations functions
-* Saitama - kanged and leeched from Saitama dbcleanup. antispam
+* Saitama - kanged and leeched from Saitama evel. antispam
 And much more that we couldn't list it here!
